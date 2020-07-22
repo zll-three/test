@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zll.mapper.UserMapper">
+    <!-- 回显数据 -->
+          <resultMap type="User" id="userlist">
+            <result property="u_id" column="u_id"/>
+            <result property="userName" column="userName"/>
+         <result property="address" column="address"/>
+         <result property="role" column="role"/>
+         <result property="ud_id" column="ud_id"/>
+                 <collection property="departmentList" ofType="Department">
+               <id property="d_id" column="d_id"/>
+                <result property="d_name" column="d_name"/>
+          <result property="du_id" column="du_id"/>
+             </collection>
+            </resultMap>
+     <!-- 查询全部信息 -->
+         <!--查询全部信息  -->
+         <select id="getUserList" resultMap="userlist" >
+       SELECT u.*,d.*,c.* FROM `user` u ,department d,ud c
+         WHERE u.u_id=c.ud_id AND d.d_id=c.du_id
+           <if test="u_id>0">and u.u_id=#{u_id}</if>
+         </select>
+           <!-- 解除用户关联 -->
+            <delete id="delUd" parameterType="User">
+            delete from ud where `ud_id`=#{u_id} 
+         </delete>
+          <!-- 获取到user最后一次插入的数据，并返回一个int型的值 -->
+<select id="selectLastId" resultType="Integer">
+	select LAST_INSERT_ID()
+    </select>
+         <!-- 增加用户 -->
+         <insert id="addUser" parameterType="User">
+         <selectKey resultType="Integer" order="AFTER" keyProperty="u_id">
+           SELECT LAST_INSERT_ID()
+     	</selectKey>
+           INSERT INTO user (userName,address,role)
+            VALUES(#{userName},#{address},#{role})
+           
+         </insert>
+         <insert id="addUd">
+          
+          INSERT INTO ud (ud_id,du_id)
+            VALUES(#{u_id},#{d_id})
+         </insert>
+          <!-- 修改数据 -->
+         <update id="upUser">
+               update user 
+               <set>
+               <if test="userName!=null">userName=#{userName},</if>
+                <if test="address!=null">address=#{address},</if>
+                 <if test="role!=null">role=#{role}</if>
+               </set>
+               where u_id=#{u_id}
+         </update>
+         
+          <update id="upUd">
+               update ud set du_id=#{d_id} where ud_id=#{u_id}
+         </update>
+</mapper>

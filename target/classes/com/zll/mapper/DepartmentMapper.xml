@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zll.mapper.DepartmentMapper">
+     <!-- 查询用户信息 -->
+      <resultMap type="Department" id="departmentList">
+         <id property="d_id" column="d_id"/>
+          <result property="d_name" column="d_name"/>
+          <result property="du_id" column="du_id"/>
+            <collection property="userList" ofType="User">
+         <id property="u_id" column="u_id"/>
+         <result property="userName" column="userName"/>
+         <result property="address" column="address"/>
+         <result property="role" column="role"/>
+         <result property="ud_id" column="ud_id"/>
+         </collection>
+          </resultMap>
+     <select id="getDepartmentList" resultMap="departmentList">
+      SELECT d.*,u.* FROM `department` d ,`user`  u ,`ud` c  WHERE d.`d_id` =c.`du_id` AND u.`u_id` =c.`ud_id`
+      <if test="userName!=null">AND u.userName LIKE CONCAT  ('%',#{userName},'%')</if>
+      <if test="d_id>0">AND d.d_id =#{d_id}</if>
+     </select>
+     <!-- 查询全部部门信息 -->
+     <select id="getDepartmentlist" resultType="Department">
+     select * from department    
+     </select>
+</mapper>
