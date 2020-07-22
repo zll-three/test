@@ -57,10 +57,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</c:forEach>
   </select>
     </div>
-  
   <button type="submit" class="btn btn-default">查询</button>
   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
   <a class="btn btn-primary" href="${pageContext.request.contextPath}/add">增加用户</a>
+  
 </form> 
 <br>
   <div>

@@ -10,7 +10,7 @@ function delUser(id) {
 					success : success,
 					error : error,
 				});
-				// 登录成功回调函数
+				// 删除成功回调函数
 				function success(data) {		
 					if(data.delUserResult == "true"){
 						alert("删除成功");

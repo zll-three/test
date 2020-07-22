@@ -29,7 +29,7 @@ function upUser(id) {
 		"error" : error,
 	});
 	
-	// 增加成功回调函数
+	// 修改成功回调函数
 	function success(data) {
 		if(data.upUserResult == "true"){
 			alert("修改成功");
