@@ -58,7 +58,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </select>
     </div>
   
-  <button type="submit" class="btn btn-default">提交</button>
+  <button type="submit" class="btn btn-default">查询</button>
   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
   <a class="btn btn-primary" href="${pageContext.request.contextPath}/add">增加用户</a>
 </form> 
